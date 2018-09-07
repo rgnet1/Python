@@ -1,1 +1,1 @@
-10.0.0.10 UserName PASSWORD
+10.10.210.125 intervision Interv2k!
