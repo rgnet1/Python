@@ -1,0 +1,306 @@
+show run
+! Command: show running-config
+! device: sw-leaf-tx-01 (DCS-7050TX-72Q, EOS-4.20.8M)
+!
+! boot system flash:/EOS-4.20.8M.swi
+!
+transceiver qsfp default-mode 4x10G
+!
+hostname sw-leaf-tx-01
+ip name-server vrf default 4.2.2.2
+ip name-server vrf default 8.8.8.8
+!
+ntp server 10.0.30.5 prefer
+ntp server pool.ntp.org
+ntp server us.pool.ntp.org prefer minpoll 10
+!
+snmp-server enable traps capacity
+snmp-server enable traps entity
+snmp-server enable traps ospf
+snmp-server enable traps snmp authentication
+snmp-server enable traps snmp link-down
+snmp-server enable traps snmp link-up
+snmp-server enable traps snmpConfigManEvent
+!
+spanning-tree mode rapid-pvst
+!
+no aaa root
+!
+username intervision role network-admin secret sha512 $6$WNUU/90gmBtxiVCH$Hxf1qKGq3CfvOj7rrTwC2v0WkYt19/ygyQMcMLBfPLsm/75JGXAepufRymq6BlkxFEbaNFSd54NWw0ga1kP5e0
+!
+clock timezone PST8PDT
+!
+vlan 2
+   name LAN0002
+!
+vlan 3
+   name INTRANET
+!
+vlan 4
+   name APGnet
+!
+vlan 6
+   name COGENT-ext
+!
+vlan 7
+   name External
+!
+vlan 8
+   name Heartbeat
+!
+vlan 10
+   name 65network-outside
+!
+vlan 14
+   name dmz
+!
+vlan 30
+   name BACKUP_NETWORK
+!
+vlan 65
+   name centurylink-internap
+!
+vlan 100
+   name VLAN00100
+!
+vlan 200
+   name VLAN00200
+!
+vlan 300
+   name VLAN00300
+!
+vlan 400
+   name VLAN00400
+!
+vlan 800
+   name temp-management
+!
+vlan 801
+   name test-inside
+!
+vlan 804
+   name test-dmz-int
+!
+vlan 807
+   name test-external
+!
+vlan 814
+   name test-dmz-transit
+!
+vlan 1000
+   name VLAN01000
+!
+vlan 1002
+   name fddi-default
+!
+vlan 1003
+   name token-ring-default
+!
+vlan 1004
+   name fddinet-default
+!
+vlan 1005
+   name trnet-default
+!
+vlan 4093
+   name MLAG-Keepalive
+   trunk group mlagpeer
+!
+vlan 4094
+   name F5-HA
+!
+interface Port-Channel51
+   description MLAG to sw-spine
+   switchport mode trunk
+   mlag 51
+!
+interface Port-Channel999
+   description MLAG PEER LINK - DONT TOUCH
+   switchport mode trunk
+   switchport trunk group mlagpeer
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Ethernet16
+!
+interface Ethernet17
+!
+interface Ethernet18
+!
+interface Ethernet19
+!
+interface Ethernet20
+!
+interface Ethernet21
+!
+interface Ethernet22
+!
+interface Ethernet23
+!
+interface Ethernet24
+!
+interface Ethernet25
+!
+interface Ethernet26
+!
+interface Ethernet27
+!
+interface Ethernet28
+!
+interface Ethernet29
+!
+interface Ethernet30
+!
+interface Ethernet31
+!
+interface Ethernet32
+!
+interface Ethernet33
+!
+interface Ethernet34
+!
+interface Ethernet35
+!
+interface Ethernet36
+!
+interface Ethernet37
+!
+interface Ethernet38
+!
+interface Ethernet39
+!
+interface Ethernet40
+!
+interface Ethernet41
+!
+interface Ethernet42
+!
+interface Ethernet43
+!
+interface Ethernet44
+!
+interface Ethernet45
+!
+interface Ethernet46
+!
+interface Ethernet47
+!
+interface Ethernet48
+!
+interface Ethernet49/1
+!
+interface Ethernet49/2
+!
+interface Ethernet49/3
+!
+interface Ethernet49/4
+!
+interface Ethernet50/1
+!
+interface Ethernet50/2
+!
+interface Ethernet50/3
+!
+interface Ethernet50/4
+!
+interface Ethernet51/1
+   description MLAG to sw-spine-01 Et3/1
+   speed forced 40gfull
+   channel-group 51 mode active
+!
+interface Ethernet52/1
+   description MLAG to sw-spine-02 Et3/1
+   speed forced 40gfull
+   channel-group 51 mode active
+!
+interface Ethernet53/1
+   description LAG to sw-leaf-tx-02 Et53/1
+   speed forced 40gfull
+   switchport mode trunk
+   channel-group 999 mode active
+!
+interface Ethernet54/1
+   description LAG to sw-leaf-tx-02 Et54/1
+   speed forced 40gfull
+   switchport mode trunk
+   channel-group 999 mode active
+!
+interface Management1
+   ip address 10.10.210.125/24
+!
+interface Vlan4093
+   no autostate
+   ip address 10.255.255.9/30
+!
+ip route 0.0.0.0/0 10.10.210.1
+!
+no ip routing
+!
+mlag configuration
+   domain-id sw-leaf-tx-pair1
+   local-interface Vlan4093
+   peer-address 10.255.255.10
+   primary-priority 10
+   peer-link Port-Channel999
+   reload-delay 120
+!
+banner login
+#*************************************************************#
+|   This Atypon system is for business use only               |
+|   and is to be used only by authorized users. By continuing |
+|   to use the system, you represent that you are an          |
+|   authorized user and understand the system may be          |
+|   monitored. Continued use implies consent to monitoring.   |
+|-------------------------------------------------------------|
+|   Hostname: sw-leaf-tx-01
+|-------------------------------------------------------------|
+|                          Atypon                             |
+#*************************************************************#
+
+EOF
+banner motd
+#*************************************************************#
+| Region:  North America       | Country: United States       |
+|-------------------------------------------------------------|
+| State/Province/Area:  California                            |
+|-------------------------------------------------------------|
+| Site:  Equinix DC                                           |
+|-------------------------------------------------------------|
+| Comments: sw-leaf-tx-01
+|*************************************************************|
+| Management IP: 10.0.30.181            | S/N: SSJ18142654
+|                                                             |
+#*************************************************************#
+
+EOF
+!
+end
+sw-leaf-tx-01#

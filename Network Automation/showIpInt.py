@@ -28,11 +28,13 @@ def readFile(fileName):
 	return numOfDevices,deviceList
 
 
-def execute_commands(ip_commands, ssh_remote):
+def execute_commands(ip_commands, ssh_remote, device_name):
 	command_list = open(ip_commands, 'r')
-	result = open('output.txt', 'w')
+
 	
 	for line in command_list:
+		new_file = 'output-'+ device_name + '.txt'
+		result = open(new_file, 'w')
 		title = 'About to execute command: ' + line.strip()
 		top_bar = '           '
 		
@@ -43,17 +45,15 @@ def execute_commands(ip_commands, ssh_remote):
 		curr_cmd = '__________|About to execute command: ' + line.strip() + '|__________'
 		print curr_cmd
 		
-		line = '|'
+		empty_line = '|'
 		for y in range(0, len(curr_cmd)-1,1):
-			line +=' '
-		line += '|'
-		print line
+			empty_line +=' '
+		empty_line += '|'
+		print empty_line
 		#Now we can execute commands
 		ssh_remote.send(line.lstrip())
 		
-		time.sleep(5)
-		if 'sh ru' in line:
-			time.sleep(5)
+		time.sleep(3)
 		output = ssh_remote.recv(655350)
 		success_string = '| command status: successful'
 		invalid_string = '| command status: invalid'
@@ -71,7 +71,7 @@ def execute_commands(ip_commands, ssh_remote):
 		end_line = '|'
 		for x in range(0, len(curr_cmd)-1,1):
 			end_line += '_'
-		end_line += '|'
+		end_line += '|\n\n\n'
 		print end_line
 
 		result.write(output + '\n')
@@ -85,13 +85,13 @@ numOfDevices, deviceList = readFile("config.txt")
 
 
 for i in range(numOfDevices):
-	print "********** Now Going into device: ",deviceList[i][1]," ************"
+	print "********** Now Going into device: ",deviceList[i][0]," ************"
 	ssh.connect(deviceList[i][0],port=22, username=deviceList[i][1],
              	password=deviceList[i][2])
 
 	ssh_remote = ssh.invoke_shell()
 
-	execute_commands(deviceList[i][0], ssh_remote)
+	execute_commands(deviceList[i][0], ssh_remote, deviceList[i][0])
 	
 	ssh.close()
 	#Now we can execute commands
