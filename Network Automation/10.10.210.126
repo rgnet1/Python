@@ -1,3 +1,5 @@
 enable
-terminal len 0
-show run
+conf t
+int Vlan30
+ip addr 10.0.30.182/24
+write

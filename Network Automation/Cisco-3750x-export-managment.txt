@@ -1,0 +1,1362 @@
+[~]>ssh costas@10.0.20.5
+The authenticity of host '10.0.20.5 (10.0.20.5)' can't be established.
+RSA key fingerprint is SHA256:1yYKSahywNa/NFQ5UTWtUHp5uqaPw5gRIH5HN/W2Wmk.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '10.0.20.5' (RSA) to the list of known hosts.
+
+  #*************************************************************#
+  |   This Atypon system is for business use only               |
+  |   and is to be used only by authorized users. By continuing |
+  |   to use the system, you represent that you are an          |
+  |   authorized user and understand the system may be          |
+  |   monitored. Continued use implies consent to monitoring.   |
+  |-------------------------------------------------------------|
+  |   Hostname: ATP-MGMT-SW02                                   |
+  |-------------------------------------------------------------|
+  |                          Atypon                             |
+  #*************************************************************#
+
+Password: 
+
+
+  #*************************************************************#
+  | Region:  North America       | Country: United States       |
+  |-------------------------------------------------------------|
+  | State/Province/Area:  California                            |
+  |-------------------------------------------------------------|
+  | Site:  Equinix DC                                           |
+  |-------------------------------------------------------------|
+  | Comments: Management Switch Stack                           |
+  |*************************************************************|
+  | Management IP:10.0.20.6      | S/N: FDO1807Z1AW             |
+  |                              ! S/N: FDO1703W1PN             |
+  #*************************************************************#
+
+
+ATP-MGMT-SW02#enable
+ATP-MGMT-SW02#show run
+Building configuration...
+
+Current configuration : 19304 bytes
+!
+! Last configuration change at 10:54:39 PDT Mon Jun 1 2015 by fsadmin
+! NVRAM config last updated at 10:35:47 PDT Mon May 11 2015 by fsadmin
+!
+version 15.2
+no service pad
+service timestamps debug datetime localtime show-timezone
+service timestamps log datetime localtime show-timezone
+service password-encryption
+service sequence-numbers
+!
+hostname ATP-MGMT-SW02
+!
+boot-start-marker
+boot-end-marker
+!
+logging count
+logging buffered 200000
+logging console errors
+logging monitor errors
+enable secret 5 $1$uHbM$quAh9OsleCHuM5iyXhLCx.
+!
+username costas privilege 15 secret 5 $1$pfB9$KDs.3nzd2lWwO4UiKpWeO/
+username fusionstorm privilege 15 secret 5 $1$xg.W$gz/T9jqkZhDWgBfVavZGR0
+username fsadmin privilege 15 secret 5 $1$KfIl$5rM3rrL04GkrMABfFJRW00
+no aaa new-model
+clock timezone PST -8 0
+clock summer-time PDT recurring
+switch 1 provision ws-c3750x-48
+switch 2 provision ws-c3750x-48
+system mtu routing 1500
+ip routing
+!
+!         
+ip domain-name int.atypon.com
+ip name-server 4.2.2.2
+ip name-server 8.8.8.8
+ip device tracking
+vtp domain atypon
+vtp mode transparent
+!
+!
+crypto pki trustpoint TP-self-signed-3031484032
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3031484032
+ revocation-check none
+ rsakeypair TP-self-signed-3031484032
+!
+!
+crypto pki certificate chain TP-self-signed-3031484032
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33303331 34383430 3332301E 170D3131 30333330 30313239 
+  34335A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 30333134 
+  38343033 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100E0E6 6333F681 20AF9B54 BA060E65 D634AB48 7EB56F46 FE165D17 B58D8692 
+  CF626D1D 80A94295 4EF80807 DAF9F05F D5B889D8 216F8E45 FCE2A836 1EE15BAB 
+  44BBA79C 2FBE2515 B90658B3 DC932A06 9C1AE403 607FCE9D F6A1F419 41BFE806 
+  7FB0F5B4 FEE24D95 5BA332AE 2AD2FFD9 DEF4A808 8809685D FE5F2A58 44E82665 
+  BBD50203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 14E34F9F 1C5B5DED A2492757 92A54A42 EBA72F05 D4301D06 
+  03551D0E 04160414 E34F9F1C 5B5DEDA2 49275792 A54A42EB A72F05D4 300D0609 
+  2A864886 F70D0101 05050003 8181009F 0558DC66 279046D7 8BE5DE34 7F2E7D0B 
+  E9087C08 9EA48CED 6249864C 465E71D4 626995D0 F0AD0229 C5DCD3E5 78A0B94C 
+  EE2D7309 94E44CC9 ED51AD52 D0EB8DE9 BF788BE3 541C3FB3 A45B3EC8 0E00A65D 
+  A4E9D514 D75D7773 DFA2C077 8BEFB88B 30FA2BB5 6EB4083B A4DD9D45 2BB6D5C5 
+  CDA682A7 3488C8DD FA581445 385875
+  	quit
+archive
+ path ftp:
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+!
+errdisable recovery cause udld
+errdisable recovery cause bpduguard
+errdisable recovery cause security-violation
+errdisable recovery cause channel-misconfig
+errdisable recovery cause pagp-flap
+errdisable recovery cause dtp-flap
+errdisable recovery cause link-flap
+errdisable recovery cause sfp-config-mismatch
+errdisable recovery cause gbic-invalid
+errdisable recovery cause l2ptguard
+errdisable recovery cause psecure-violation
+errdisable recovery cause port-mode-failure
+errdisable recovery cause dhcp-rate-limit
+errdisable recovery cause pppoe-ia-rate-limit
+errdisable recovery cause mac-limit
+errdisable recovery cause vmps
+errdisable recovery cause storm-control
+errdisable recovery cause inline-power
+errdisable recovery cause arp-inspection
+errdisable recovery cause loopback
+errdisable recovery cause small-frame
+errdisable recovery cause psp
+errdisable recovery interval 200
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2
+ name LAN0002
+!
+vlan 3
+ name INTRANET
+!
+vlan 4
+ name dmz_servers
+!
+vlan 6
+ name COGENT-ext
+!
+vlan 7
+ name External
+!
+vlan 8
+ name Heartbeat
+!
+vlan 14
+ name dmz
+!
+vlan 30
+ name BACKUP_NETWORK
+!
+vlan 100
+ name VLAN00100
+!
+vlan 200  
+ name VLAN00200
+!
+vlan 300
+ name VLAN00300
+!
+vlan 400
+ name VLAN00400
+!
+vlan 800
+ name temp-management
+!
+vlan 801
+ name test-inside
+!
+vlan 804
+ name test-dmz-int
+!
+vlan 807
+ name test-external
+!
+vlan 814
+ name test-dmz-transit
+!
+vlan 999 
+!
+vlan 1000
+ name VLAN01000
+!
+ip ftp password 7 000206530D5405
+ip ssh version 2
+!
+! 
+!
+!
+!         
+!
+!
+!
+!
+!
+interface Port-channel1
+ description CONNECTION TO CORE-A
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel2
+ description CONNECTION TO CORE-B
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Port-channel3
+ description CONNECTION-2-3850
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+ no ip route-cache
+ shutdown
+!
+interface GigabitEthernet1/0/1
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/2
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet1/0/3
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/4
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/5
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/6
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/7
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/8
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/9
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet1/0/10
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/11
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/12
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/13
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/14
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/15
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/16
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet1/0/17
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/18
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/19
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/20
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/21
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/22
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/23
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet1/0/24
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/25
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/26
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/27
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/28
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/29
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/30
+ switchport access vlan 30
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet1/0/31
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/32
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/33
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/34
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/35
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/36
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/37
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet1/0/38
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/39
+ description MGMT-SW1-2
+ switchport access vlan 3
+ switchport mode access
+!
+interface GigabitEthernet1/0/40
+ description MGMT-SW1-1
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/41
+ description CONNECTION TO CORE-B
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode active
+!
+interface GigabitEthernet1/0/42
+ description CONNECTION TO CORE-B
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 2 mode active
+!
+interface GigabitEthernet1/0/43
+ description CONNECTION TO CORE-A
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/44
+ description CONNECTION TO CORE-A
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/45
+ description SW2-1-MGMT
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/46
+ description CONNECTION-2-3850
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet1/0/47
+ description CONNECTION-2-3850
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet1/0/48
+ description TO-2901
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet1/1/1
+!
+interface GigabitEthernet1/1/2
+!
+interface GigabitEthernet1/1/3
+!
+interface GigabitEthernet1/1/4
+!
+interface TenGigabitEthernet1/1/1
+!
+interface TenGigabitEthernet1/1/2
+!
+interface GigabitEthernet2/0/1
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/2
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/3
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/4
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/5
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/6
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet2/0/7
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/8
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/9
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/10
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/11
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/12
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/13
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet2/0/14
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/15
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/16
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/17
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/18
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/19
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/20
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet2/0/21
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/22
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/23
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/24
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/25
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/26
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/27
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet2/0/28
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/29
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/30
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/31
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/32
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/33
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/34
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!         
+interface GigabitEthernet2/0/35
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/36
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/37
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/38
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/39
+ description MGMT-SW1-3
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/40
+ description MGMT-SW1-4
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/41
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/42
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/43
+ description F5-A Mgmt
+ switchport access vlan 2
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/44
+ description F5-B Mgmt
+ switchport access vlan 2
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/45
+ description SW2-2-MGMT
+ switchport access vlan 3
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet2/0/46
+ description CONNECTION-2-3850
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet2/0/47
+ description CONNECTION-2-3850
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 3 mode active
+!
+interface GigabitEthernet2/0/48
+ description TO-2901
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet2/1/1
+!
+interface GigabitEthernet2/1/2
+!
+interface GigabitEthernet2/1/3
+!
+interface GigabitEthernet2/1/4
+!
+interface TenGigabitEthernet2/1/1
+!
+interface TenGigabitEthernet2/1/2
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan2
+ no ip address
+!
+interface Vlan3
+ ip address 10.0.20.5 255.255.255.0
+!
+interface Vlan30
+ ip address 10.0.30.5 255.255.255.0
+!
+interface Vlan999
+ ip address 192.168.1.200 255.255.255.0
+!
+router ospf 1
+ network 10.0.20.0 0.0.0.255 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 10.0.20.1 200
+!
+!
+logging trap errors
+logging facility local0
+logging host 10.0.10.29
+!
+tftp-server 10.0.20.42
+snmp-server community p00bear RO
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps config-copy
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps hsrp
+snmp-server enable traps ipmulticast
+snmp-server enable traps pim neighbor-change rp-mapping-change invalid-pim-message
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps flash insertion removal
+snmp-server enable traps port-security
+snmp-server enable traps envmon fan shutdown supply temperature status
+snmp-server enable traps vlan-membership
+!
+privilege exec level 5 show startup-config
+privilege exec level 5 show
+banner exec ^C
+
+  #*************************************************************#
+  | Region:  North America       | Country: United States       |
+  |-------------------------------------------------------------|
+  | State/Province/Area:  California                            |
+  |-------------------------------------------------------------|
+  | Site:  Equinix DC                                           |
+  |-------------------------------------------------------------|
+  | Comments: Management Switch Stack                           |
+  |*************************************************************|
+  | Management IP:10.0.20.6      | S/N: FDO1807Z1AW             |
+  |                              ! S/N: FDO1703W1PN             |
+  #*************************************************************#
+
+
+^C
+banner login ^C
+  #*************************************************************#
+  |   This Atypon system is for business use only               |
+  |   and is to be used only by authorized users. By continuing |
+  |   to use the system, you represent that you are an          |
+  |   authorized user and understand the system may be          |
+  |   monitored. Continued use implies consent to monitoring.   |
+  |-------------------------------------------------------------|
+  |   Hostname: ATP-MGMT-SW02                                   |
+  |-------------------------------------------------------------|
+  |                          Atypon                             |
+  #*************************************************************#
+
+^C
+!
+line con 0
+ login local
+ stopbits 1
+line vty 0 4
+ session-timeout 60 
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+ntp source Vlan30
+ntp master 4
+ntp server us.pool.ntp.org minpoll 10 prefer
+ntp server pool.ntp.org
+mac address-table aging-time 14400
+end
+
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#show interface status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi1/0/1                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/2                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/3                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/4                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/5                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/6                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/7                      connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/8                      connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/9                      connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/10                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/11                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/12                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/13                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/14                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/15                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/16                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/17                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/18                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/19                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/20                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/21                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/22                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/23                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/24                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/25                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/26                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/27                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/28                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi1/0/29                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/30                     connected    30         a-full a-1000 10/100/1000BaseTX
+Gi1/0/31                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/32                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/33                     notconnect   3            auto   auto 10/100/1000BaseTX
+          
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi1/0/34                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/35                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/36                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/37                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/38                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/39  MGMT-SW1-2         connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/40  MGMT-SW1-1         connected    3          a-full a-1000 10/100/1000BaseTX
+Gi1/0/41  CONNECTION TO CORE suspended    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/42  CONNECTION TO CORE notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/43  CONNECTION TO CORE notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/44  CONNECTION TO CORE notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/45  SW2-1-MGMT         notconnect   3            auto   auto 10/100/1000BaseTX
+Gi1/0/46  CONNECTION-2-3850  connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/47  CONNECTION-2-3850  connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/48  TO-2901            connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi2/0/1                      notconnect   3            auto   auto 10/100/1000BaseTX
+Gi2/0/2                      notconnect   3            auto   auto 10/100/1000BaseTX
+Gi2/0/3                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/4                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/5                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/6                      connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/7                      notconnect   3            auto   auto 10/100/1000BaseTX
+Gi2/0/8                      notconnect   3            auto   auto 10/100/1000BaseTX
+Gi2/0/9                      connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/10                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/11                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/12                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/13                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/14                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/15                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/16                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/17                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/18                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/19                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/20                     connected    3          a-full  a-100 10/100/1000BaseTX
+          
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi2/0/21                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/22                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/23                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/24                     connected    3          a-full  a-100 10/100/1000BaseTX
+Gi2/0/25                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/26                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/27                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/28                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/29                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/30                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/31                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/32                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/33                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/34                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi2/0/35                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/36                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/37                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/38                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/39  MGMT-SW1-3         connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/40  MGMT-SW1-4         connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/41                     connected    3          a-full a-1000 10/100/1000BaseTX
+Gi2/0/42                     notconnect   3            auto   auto 10/100/1000BaseTX
+Gi2/0/43  F5-A Mgmt          notconnect   2            auto   auto 10/100/1000BaseTX
+Gi2/0/44  F5-B Mgmt          notconnect   2            auto   auto 10/100/1000BaseTX
+Gi2/0/45  SW2-2-MGMT         notconnect   3            auto   auto 10/100/1000BaseTX
+Gi2/0/46  CONNECTION-2-3850  connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi2/0/47  CONNECTION-2-3850  connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi2/0/48  TO-2901            notconnect   1            auto   auto 10/100/1000BaseTX
+Gi2/1/1                      notconnect   1            auto   auto Not Present
+Gi2/1/2                      notconnect   1            auto   auto Not Present
+Gi2/1/3                      notconnect   1            auto   auto Not Present
+Gi2/1/4                      notconnect   1            auto   auto Not Present
+Po1       CONNECTION TO CORE notconnect   1            auto   auto 
+Po2       CONNECTION TO CORE notconnect   1            auto   auto 
+Po3       CONNECTION-2-3850  connected    trunk      a-full a-1000 
+          
+Port      Name               Status       Vlan       Duplex  Speed Type
+Fa0                          disabled     routed       auto   auto 10/100BaseTX
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#show ip interface
+Vlan1 is up, line protocol is up
+  Internet protocol processing disabled
+Vlan2 is up, line protocol is up
+  Internet protocol processing disabled
+Vlan3 is up, line protocol is up
+  Internet address is 10.0.20.5/24
+  Broadcast address is 255.255.255.255
+  Address determined by setup command
+  MTU is 1500 bytes
+  Helper address is not set
+  Directed broadcast forwarding is disabled
+  Multicast reserved groups joined: 224.0.0.251 224.0.0.5 224.0.0.6
+  Outgoing access list is not set
+  Inbound  access list is not set
+  Proxy ARP is enabled
+  Local Proxy ARP is disabled
+  Security level is default
+  Split horizon is enabled
+  ICMP redirects are always sent
+  ICMP unreachables are always sent
+  ICMP mask replies are never sent
+  IP fast switching is enabled
+  IP Flow switching is disabled
+  IP CEF switching is enabled
+  IP CEF switching turbo vector
+  IP Null turbo vector
+  IP multicast fast switching is enabled
+  IP multicast distributed fast switching is disabled
+  IP route-cache flags are Fast, CEF
+  Router Discovery is disabled
+  IP output packet accounting is disabled
+  IP access violation accounting is disabled
+  TCP/IP header compression is disabled
+  RTP/IP header compression is disabled
+  Probe proxy name replies are disabled
+  Policy routing is disabled
+  Network address translation is disabled
+  BGP Policy Mapping is disabled
+  Input features: MCI Check
+  Output features: Input interface drop, Check hwidb
+Vlan30 is up, line protocol is up
+  Internet address is 10.0.30.5/24
+  Broadcast address is 255.255.255.255
+  Address determined by setup command
+  MTU is 1500 bytes
+  Helper address is not set
+  Directed broadcast forwarding is disabled
+  Multicast reserved groups joined: 224.0.0.251
+  Outgoing access list is not set
+  Inbound  access list is not set
+  Proxy ARP is enabled
+  Local Proxy ARP is disabled
+  Security level is default
+  Split horizon is enabled
+  ICMP redirects are always sent
+  ICMP unreachables are always sent
+  ICMP mask replies are never sent
+  IP fast switching is enabled
+  IP Flow switching is disabled
+  IP CEF switching is enabled
+  IP CEF switching turbo vector
+  IP Null turbo vector
+  IP multicast fast switching is enabled
+  IP multicast distributed fast switching is disabled
+  IP route-cache flags are Fast, CEF
+  Router Discovery is disabled
+  IP output packet accounting is disabled
+  IP access violation accounting is disabled
+  TCP/IP header compression is disabled
+  RTP/IP header compression is disabled
+  Probe proxy name replies are disabled
+  Policy routing is disabled
+  Network address translation is disabled
+  BGP Policy Mapping is disabled
+  Input features: MCI Check
+  Output features: Input interface drop, Check hwidb
+Vlan999 is up, line protocol is up
+  Internet address is 192.168.1.200/24
+  Broadcast address is 255.255.255.255
+  Address determined by setup command
+  MTU is 1500 bytes
+  Helper address is not set
+  Directed broadcast forwarding is disabled
+  Multicast reserved groups joined: 224.0.0.251 224.0.0.5 224.0.0.6
+  Outgoing access list is not set
+  Inbound  access list is not set
+  Proxy ARP is enabled
+  Local Proxy ARP is disabled
+  Security level is default
+  Split horizon is enabled
+  ICMP redirects are always sent
+  ICMP unreachables are always sent
+  ICMP mask replies are never sent
+  IP fast switching is enabled
+  IP Flow switching is disabled
+  IP CEF switching is enabled
+  IP CEF switching turbo vector
+  IP Null turbo vector
+  IP multicast fast switching is enabled
+  IP multicast distributed fast switching is disabled
+  IP route-cache flags are Fast, CEF
+  Router Discovery is disabled
+  IP output packet accounting is disabled
+  IP access violation accounting is disabled
+  TCP/IP header compression is disabled
+  RTP/IP header compression is disabled
+  Probe proxy name replies are disabled
+  Policy routing is disabled
+  Network address translation is disabled
+  BGP Policy Mapping is disabled
+  Input features: MCI Check
+  Output features: Input interface drop, Check hwidb
+FastEthernet0 is administratively down, line protocol is down
+  Internet protocol processing disabled
+GigabitEthernet1/0/1 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/2 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/3 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/4 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/5 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/6 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/7 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/8 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/9 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/10 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/11 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/12 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/13 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/14 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/15 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/16 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/17 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/18 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/19 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/20 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/21 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/22 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/23 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/24 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/25 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/26 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/27 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/28 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/29 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/30 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/31 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/32 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/33 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/34 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/35 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/36 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/37 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/38 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/39 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/40 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/41 is up, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/42 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/43 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/44 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/45 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/0/46 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/47 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/0/48 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet1/1/1 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/1/2 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/1/3 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet1/1/4 is down, line protocol is down
+  Inbound  access list is not set
+TenGigabitEthernet1/1/1 is down, line protocol is down
+  Inbound  access list is not set
+TenGigabitEthernet1/1/2 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/1 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/2 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/3 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/4 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/5 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/6 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/7 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/8 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/9 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/10 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/11 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/12 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/13 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/14 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/15 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/16 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/17 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/18 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/19 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/20 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/21 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/22 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/23 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/24 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/25 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/26 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/27 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/28 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/29 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/30 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/31 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/32 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/33 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/34 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/35 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/36 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/37 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/38 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/39 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/40 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/41 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/42 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/43 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/44 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/45 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/0/46 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/47 is up, line protocol is up
+  Inbound  access list is not set
+GigabitEthernet2/0/48 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/1/1 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/1/2 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/1/3 is down, line protocol is down
+  Inbound  access list is not set
+GigabitEthernet2/1/4 is down, line protocol is down
+  Inbound  access list is not set
+TenGigabitEthernet2/1/1 is down, line protocol is down
+  Inbound  access list is not set
+TenGigabitEthernet2/1/2 is down, line protocol is down
+  Inbound  access list is not set
+Port-channel1 is down, line protocol is down
+Port-channel2 is down, line protocol is down
+Port-channel3 is up, line protocol is up
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+38.104.138.254    1   FULL/DROTHER    00:00:36    10.0.20.4       Vlan3
+129.41.4.139      1   FULL/BDR        00:00:36    10.0.20.1       Vlan3
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area 
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is 10.0.20.1 to network 0.0.0.0
+
+O*E2  0.0.0.0/0 [110/1] via 10.0.20.1, 7w0d, Vlan3
+      10.0.0.0/8 is variably subnetted, 5 subnets, 2 masks
+O        10.0.10.0/24 [110/2] via 10.0.20.1, 7w0d, Vlan3
+C        10.0.20.0/24 is directly connected, Vlan3
+L        10.0.20.5/32 is directly connected, Vlan3
+C        10.0.30.0/24 is directly connected, Vlan30
+L        10.0.30.5/32 is directly connected, Vlan30
+      129.41.0.0/16 is variably subnetted, 3 subnets, 3 masks
+O        129.41.4.128/26 [110/2] via 10.0.20.1, 7w0d, Vlan3
+O        129.41.23.128/25 [110/2] via 10.0.20.1, 7w0d, Vlan3
+O        129.41.27.0/24 [110/2] via 10.0.20.1, 7w0d, Vlan3
+      192.168.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.1.0/24 is directly connected, Vlan999
+L        192.168.1.200/32 is directly connected, Vlan999
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#
+ATP-MGMT-SW02#exit
+Connection to 10.0.20.5 closed.

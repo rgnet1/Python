@@ -1,3 +1,6 @@
 enable
+conf t
 terminal len 0
-show run
+int Vlan30
+ip addr 10.0.30.189/24
+write
