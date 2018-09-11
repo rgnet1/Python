@@ -20,23 +20,25 @@ def readFile(fileName):
 	numOfDevices = 0
 	readfile = open("config.txt","r")
 	for line in readfile:
-		line = line.strip("\r\n")
-		line = line.split(" ")
-		deviceList.append([line[0],line[1],line[2]])
-		numOfDevices +=1
+		# Skip commented out
+		if not line.startswith('#') and not line.startswith('//'):
+			line = line.strip("\r\n")
+			line = line.split(" ")
+			deviceList.append([line[0],line[1],line[2]])
+			numOfDevices += 1
 
 	return numOfDevices,deviceList
 
 
 def execute_commands(ip_commands, ssh_remote, device_name):
 	command_list = open(ip_commands, 'r')
-
+	new_file = 'output-' + device_name + '.txt'
+	result = open(new_file, 'w')
 	
 	for line in command_list:
-		new_file = 'output-'+ device_name + '.txt'
-		result = open(new_file, 'w+')
+
 		cmd = line.strip()
-		if len(cmd) > 0:
+		if len(cmd) > 0 and '!' != cmd:
 			title = 'About to execute command: ' + cmd
 			top_bar = '           '
 
@@ -72,13 +74,13 @@ def execute_commands(ip_commands, ssh_remote, device_name):
 				print success_string
 
 			end_line = '|'
-			for x in range(0, len(curr_cmd)-1,1):
+			for x in range(0, len(curr_cmd)-1, 1):
 				end_line += '_'
 			end_line += '|\n\n\n'
 			print end_line
 
 			result.write(output + '\n')
-			result.close()
+	result.close()
 
 		
 
