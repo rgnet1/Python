@@ -105,6 +105,7 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 					begin_found += 1
 				else:
 					command_list.write(line.strip() + '\n')
+					print 'Writing the following cmd: ['+ line.strip()+']'
 
 				line = kevin_file.next()
 		command_list.close()
@@ -140,6 +141,7 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 
 #Read in file for address, username and password
 numOfDevices, deviceList = readFile("log in credentials.txt")
+
 if kevin_file:
 	global begin_found
 	global start
@@ -167,8 +169,8 @@ for i in range(numOfDevices):
 
 print '\n\n            Checking for errors'
 
-# Check for errors
-for z in range(0,len(output_files_list), 1):
+# Check for errors or invalid input
+for z in range(0, len(output_files_list), 1):
 	title = output_files_list[i].strip('output-')
 	title = title.strip('.txt')
 
