@@ -1,10 +1,12 @@
 import paramiko
 import time
 import argparse
+from printer import *
+
 # used for running os commands
 import pexpect
 
-#              showIpInt.py
+#              ssh_automate.py
 # This is a simple program that ssh's into Networkig devices and
 # gets the interface configuration. This program requires all devices'
 # ssh information reside in the file "config.txt", which should be in the
@@ -17,10 +19,12 @@ import pexpect
 parser = argparse.ArgumentParser()
 parser.add_argument('-kfile', '--kevinfile')
 parser.add_argument('-sf', '--singlefile')
+parser.add_argument('-os', '--operatingsystem', default='cisco')
 
 args = parser.parse_args()
 kevin_file = args.kevinfile
 single_file = args.singlefile
+os = args.operatingsystem
 
 kevin_flag = False
 ssh = paramiko.SSHClient()
@@ -31,6 +35,8 @@ config_mode = {
         'juniper': 'cli\nconfigure\nset cli screen-length 0'
 
     }
+
+conf = config_mode.get(os)
 
 
 def readFile(fileName):
@@ -48,45 +54,7 @@ def readFile(fileName):
 	return numOfDevices, deviceList
 
 
-def print_progress(line):
-	title = 'About to execute command: ' + cmd
-	top_bar = '           '
 
-	for z in range(0, len(title), 1):
-		top_bar += '_'
-	print top_bar
-
-	curr_cmd = '__________|About to execute command: ' + line.strip() + '|__________'
-	print curr_cmd
-
-	empty_line = '|'
-	for y in range(0, len(curr_cmd) - 1, 1):
-		empty_line += ' '
-	empty_line += '|'
-	print empty_line
-
-	return curr_cmd
-
-
-def print_cmd_completion_status(curr_cmd, output):
-	success_string = '| command status: successful'
-	invalid_string = '| command status: invalid/incomplete'
-	if 'Invalid input' in output or 'Incomplete command' in output:
-		for u in range(0, len(curr_cmd) - len(invalid_string), 1):
-			invalid_string += ' '
-		invalid_string += '|'
-		print invalid_string
-	else:
-		for u in range(0, len(curr_cmd) - len(success_string), 1):
-			success_string += ' '
-		success_string += '|'
-		print success_string
-
-	end_line = '|'
-	for x in range(0, len(curr_cmd) - 1, 1):
-		end_line += '_'
-	end_line += '|\n\n\n'
-	print end_line
 # DEFUALT COMMANDS I NEED TO IMPLEMENT:
 # enable, conf t, terminal len 0
 def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_name):
@@ -96,9 +64,7 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 		global start
 		command_list = open(ip_commands, 'w')
 		kevin_file = open(k_file_name, 'r')
-		command_list.write('enable\n')
-		command_list.write('conf t\n')
-		command_list.write('terminal len 0\n')
+
 		for line in kevin_file:
 			while begin_found <= start:
 				if line.startswith('######') and 'BEGIN CONFIG' in line:
@@ -110,10 +76,22 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 				line = kevin_file.next()
 		command_list.close()
 		start = begin_found
+		print 'exiting now, remove this statement in the future'
 		exit()
 	new_file = 'output-' + device_name + '.txt'
 	result = open(new_file, 'w')
 	command_list = open(ip_commands, 'r')
+	config_cmds = conf.split('\n')
+
+	# Executing config commands
+	for f in range(0,len(config_cmds) 1):
+		curr_cmd = print_progress(config_cmds[f])
+		ssh_remote.send(config_cmds[f])
+		time.sleep(1)
+		output = ssh_remote.recv(655350)
+		print_cmd_completion_status(curr_cmd, output)
+
+	# executing user commands
 	for line in command_list:
 
 		cmd = line.strip()
