@@ -150,12 +150,16 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 			else:
 				time.sleep(5)
 
+			# Continue to read from buffer until output is done.
+			rcv_timeout = 5
+			interval_length = 1
 			while True:
-				print 'here'
-				output = ssh_remote.recv(1024)
-				result.write(output)
-				if len(output) < 1024:
-					print 'break 2'
+				if ssh_remote.recv_ready():
+					output = ssh_remote.recv(1024)
+					result.write(output)
+				else:
+					rcv_timeout -= interval_length
+				if rcv_timeout < 0:
 					break
 
 			print_cmd_completion_status(curr_cmd, output)
