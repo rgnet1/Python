@@ -1,0 +1,115 @@
+Last login: Thu Sep 20 13:57:33 2018 from 10.0.30.2
+#*************************************************************#
+| Region:  North America       | Country: United States       |
+|-------------------------------------------------------------|
+| State/Province/Area:  California                            |
+|-------------------------------------------------------------|
+| Site:  Equinix DC                                           |
+|-------------------------------------------------------------|
+| Comments: sw-leaf-tx-06
+|*************************************************************|
+| Management IP: 10.0.30.186	| S/N: SSJ18142653
+|                                                             |
+#*************************************************************#
+
+en
+
+en
+
+sw-leaf-tx-06>en
+sw-leaf-tx-06#
+sw-leaf-tx-06#
+show mlag
+MLAG Configuration:   
+domain-id              :    sw-leaf-tx-pair3
+local-interface        :            Vlan4093
+peer-address           :       10.255.255.17
+peer-link              :     Port-Channel999
+peer-config            :          consistent
+                                            
+MLAG Status:          
+state                  :              Active
+negotiation status     :           Connected
+peer-link status       :                  Up
+local-int status       :                  Up
+system-id              :   76:83:ef:27:ab:65
+dual-primary detection :            Disabled
+                                            
+MLAG Ports:           
+Disabled               :                   0
+Configured             :                   0
+Inactive               :                   0
+Active-partial         :                   0
+Active-full            :                   2
+
+sw-leaf-tx-06#
+sw-leaf-tx-06#
+show int status
+Port       Name                          Status       Vlan     Duplex Speed  Type         Flags
+Et1                                      notconnect   2        full   1G     10GBASE-T         
+Et2                                      notconnect   3        full   1G     10GBASE-T         
+Et3                                      notconnect   2        full   1G     10GBASE-T         
+Et4                                      notconnect   3        full   1G     10GBASE-T         
+Et5                                      notconnect   2        full   1G     10GBASE-T         
+Et6                                      notconnect   3        full   1G     10GBASE-T         
+Et7                                      notconnect   2        full   1G     10GBASE-T         
+Et8                                      notconnect   3        full   1G     10GBASE-T         
+Et9                                      notconnect   2        full   1G     10GBASE-T         
+Et10                                     notconnect   3        full   1G     10GBASE-T         
+Et11                                     notconnect   2        full   1G     10GBASE-T         
+Et12                                     notconnect   3        full   1G     10GBASE-T         
+Et13                                     notconnect   2        full   1G     10GBASE-T         
+Et14                                     notconnect   3        full   1G     10GBASE-T         
+Et15                                     notconnect   2        full   1G     10GBASE-T         
+Et16                                     notconnect   3        full   1G     10GBASE-T         
+Et17                                     notconnect   2        full   1G     10GBASE-T         
+Et18                                     notconnect   3        full   1G     10GBASE-T         
+Et19                                     notconnect   2        full   1G     10GBASE-T         
+Et20                                     notconnect   3        full   1G     10GBASE-T         
+Et21                                     notconnect   2        full   1G     10GBASE-T         
+Et22                                     notconnect   3        full   1G     10GBASE-T         
+Et23                                     notconnect   2        full   1G     10GBASE-T         
+Et24                                     notconnect   3        full   1G     10GBASE-T         
+Et25                                     notconnect   2        full   1G     10GBASE-T         
+Et26                                     notconnect   3        full   1G     10GBASE-T         
+Et27                                     notconnect   2        full   1G     10GBASE-T         
+Et28                                     notconnect   3        full   1G     10GBASE-T         
+Et29                                     notconnect   2        full   1G     10GBASE-T         
+Et30                                     notconnect   3        full   1G     10GBASE-T         
+Et31       lion109fe.int.atypon.com      notconnect   2        full   1G     10GBASE-T         
+Et32       lion109.int.atypon.com        notconnect   3        full   1G     10GBASE-T         
+Et33                                     notconnect   1        auto   auto   10GBASE-T         
+Et34                                     notconnect   1        auto   auto   10GBASE-T         
+Et35                                     notconnect   1        auto   auto   10GBASE-T         
+Et36                                     notconnect   1        auto   auto   10GBASE-T         
+Et37                                     notconnect   1        auto   auto   10GBASE-T         
+Et38                                     notconnect   1        auto   auto   10GBASE-T         
+Et39                                     notconnect   1        auto   auto   10GBASE-T         
+Et40                                     notconnect   1        auto   auto   10GBASE-T         
+Et41                                     notconnect   1        auto   auto   10GBASE-T         
+Et42                                     notconnect   1        auto   auto   10GBASE-T         
+Et43                                     notconnect   1        auto   auto   10GBASE-T         
+Et44                                     notconnect   1        auto   auto   10GBASE-T         
+Et45                                     notconnect   1        auto   auto   10GBASE-T         
+Et46                                     notconnect   1        auto   auto   10GBASE-T         
+Et47       MLAG to sw-mgmt-03 Ethernet48 connected    in Po47  full   1G     10GBASE-T         
+Et48       SQL26                         notconnect   8        auto   auto   10GBASE-T         
+Et49/1                                   notconnect   1        full   10G    Not Present       
+Et49/2                                   notconnect   1        full   10G    Not Present       
+Et49/3                                   notconnect   1        full   10G    Not Present       
+Et49/4                                   notconnect   1        full   10G    Not Present       
+Et50/1                                   notconnect   1        full   10G    Not Present       
+Et50/2                                   notconnect   1        full   10G    Not Present       
+Et50/3                                   notconnect   1        full   10G    Not Present       
+Et50/4                                   notconnect   1        full   10G    Not Present       
+Et51/1     MLAG to sw-spine-01 Et8/1     connected    in Po51  full   40G    40GBASE-SRBD      
+Et52/1     MLAG to sw-spine-02 Et8/1     connected    in Po51  full   40G    40GBASE-SRBD      
+Et53/1     LAG to sw-leaf-tx-05 Et53/1   connected    in Po999 full   40G    40GBASE-CR4       
+Et54/1     LAG to sw-leaf-tx-05 Et54/1   connected    in Po999 full   40G    40GBASE-CR4       
+Ma1                                      notconnect   routed   auto   auto   10/100/1000       
+Po47       MLAG to sw-mgmt-03            connected    trunk    full   2G     N/A               
+Po51       MLAG to sw-spine              connected    trunk    full   160G   N/A               
+Po999      MLAG PEER LINK - DONT TOUCH   connected    trunk    full   80G    N/A               
+
+sw-leaf-tx-06#
+sw-leaf-tx-06#

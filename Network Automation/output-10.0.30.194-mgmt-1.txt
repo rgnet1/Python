@@ -1,4 +1,3 @@
-Last login: Wed Sep 19 14:54:26 2018 from 10.0.30.2
 #*************************************************************#
 | Region:  North America       | Country: United States       |
 |-------------------------------------------------------------|
@@ -6,9 +5,9 @@ Last login: Wed Sep 19 14:54:26 2018 from 10.0.30.2
 |-------------------------------------------------------------|
 | Site:  Equinix DC                                           |
 |-------------------------------------------------------------|
-| Comments: sw-mgmt-02
+| Comments: sw-mgmt-01
 |*************************************************************|
-| Management IP: 10.0.30.195/24	| S/N: SSJ18231905
+| Management IP: 10.0.30.194/24	| S/N: SSJ18231860
 |                                                             |
 #*************************************************************#
 
@@ -16,54 +15,56 @@ en
 
 en
 
-sw-mgmt-02>en
-sw-mgmt-02#
-sw-mgmt-02#
+sw-mgmt-01>en
+sw-mgmt-01#
+sw-mgmt-01#
 show int status | section connected
 
-[?1h=Et47       Port-Channel to sw-leaf-tx-03 Ethernet47        connected    in Po1    full   1G     1000BASE-T        
-Et48       Port-Channel to sw-leaf-tx-04 Ethernet47        connected    in Po1    full   1G     1000BASE-T        
-Po1        Port-Channel to sw-leaf-tx-03 and sw-leaf-tx-04 connected    trunk     full   2G     N/A               
-[K[?1l>sw-mgmt-02#
-sw-mgmt-02#show int po1
-[?1h=Port-Channel1 is up, line protocol is up (connected)
-  Hardware is Port-Channel, address is 7483.efd4.2484
-  Description: Port-Channel to sw-leaf-tx-03 and sw-leaf-tx-04
+show int po1
+
+Et47       Port-Channel to sw-leaf-tx-01 Ethernet47        connected    in Po1   full   1G     1000BASE-T        
+Et48       Port-Channel to sw-leaf-tx-02 Ethernet47        connected    in Po1   full   1G     1000BASE-T        
+Po1        Port-Channel to sw-leaf-tx-01 and sw-leaf-tx-02 connected    trunk    full   2G     N/A               
+sw-mgmt-01#
+sw-mgmt-01#show int po1
+Port-Channel1 is up, line protocol is up (connected)
+  Hardware is Port-Channel, address is 7483.efd4.2376
+  Description: Port-Channel to sw-leaf-tx-01 and sw-leaf-tx-02
   Ethernet MTU 9214 bytes , BW 2000000 kbit
   Full-duplex, 2Gb/s 
   Active members in this channel: 2
   ... Ethernet47 , Full-duplex, 1Gb/s
   ... Ethernet48 , Full-duplex, 1Gb/s
   Fallback mode is: off
-  Up 6 days, 3 hours, 32 minutes, 8 seconds
-  5 link status changes since last clear
+  Up 17 minutes, 38 seconds
+  2 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 8.68 kbps (0.0% with framing overhead), 15 packets/sec
-  5 minutes output rate 1.32 kbps (0.0% with framing overhead), 1 packets/sec
-     7192442 packets input, 520913834 bytes
-     Received 152549 broadcasts, 7039433 multicast
+  5 minutes input rate 8.26 kbps (0.0% with framing overhead), 14 packets/sec
+  5 minutes output rate 636 bps (0.0% with framing overhead), 1 packets/sec
+     15327 packets input, 1117307 bytes
+     Received 757 broadcasts, 14555 multicast
      0 input errors, 0 input discards
-     624690 packets output, 51813850 bytes
-     Sent 73383 broadcasts, 550664 multicast
+     919 packets output, 82612 bytes
+     Sent 150 broadcasts, 749 multicast
      0 output errors, 0 output discards
-[K[?1l>sw-mgmt-02#
-sw-mgmt-02#
+sw-mgmt-01#
+sw-mgmt-01#
 show int po47
-
+% Interface does not exist
+sw-mgmt-01#
+sw-mgmt-01#
 show int po51
-
-[?1h=[K[?1l>% Interface does not exist
-sw-mgmt-02#
-sw-mgmt-02#show int po51
-[?1h=[K[?1l>% Interface does not exist
-sw-mgmt-02#
-sw-mgmt-02#
+% Interface does not exist
+sw-mgmt-01#
+sw-mgmt-01#
 show int po999
-[?1h=[K[?1l>% Interface does not exist
-sw-mgmt-02#
-sw-mgmt-02#
+
 show mlag
-[?1h=MLAG Configuration:   
+
+% Interface does not exist
+sw-mgmt-01#
+sw-mgmt-01#show mlag
+MLAG Configuration:   
 domain-id              :                    
 local-interface        :                    
 peer-address           :             0.0.0.0
@@ -85,5 +86,5 @@ Inactive               :                   0
 Active-partial         :                   0
 Active-full            :                   0
 
-[K[?1l>sw-mgmt-02#
-sw-mgmt-02#
+sw-mgmt-01#
+sw-mgmt-01#

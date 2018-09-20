@@ -1,4 +1,4 @@
-Last login: Wed Sep 19 14:46:11 2018 from 10.0.30.2
+Last login: Wed Sep 19 14:53:35 2018 from 10.0.30.2
 #*************************************************************#
 | Region:  North America       | Country: United States       |
 |-------------------------------------------------------------|
@@ -6,9 +6,9 @@ Last login: Wed Sep 19 14:46:11 2018 from 10.0.30.2
 |-------------------------------------------------------------|
 | Site:  Equinix DC                                           |
 |-------------------------------------------------------------|
-| Comments: sw-leaf-tx-02
+| Comments: sw-leaf-tx-03
 |*************************************************************|
-| Management IP: 10.0.30.181    | S/N: SSJ18142657
+| Management IP: 10.0.30.183	| S/N: SSJ18142658
 |                                                             |
 #*************************************************************#
 
@@ -16,27 +16,29 @@ en
 
 en
 
-sw-leaf-tx-02>en
-sw-leaf-tx-02#
-sw-leaf-tx-02#
+sw-leaf-tx-03>en
+sw-leaf-tx-03#
+sw-leaf-tx-03#
 show int status | section connected
-Et51/1     MLAG to sw-spine-01 Et4/1       connected    in Po51  full   40G    40GBASE-SRBD      
-Et52/1     MLAG to sw-spine-02 Et4/1       connected    in Po51  full   40G    40GBASE-SRBD      
-Et53/1     LAG to sw-leaf-tx-01 Et53/1     connected    in Po999 full   40G    40GBASE-CR4       
-Et54/1     LAG to sw-leaf-tx-01 Et54/1     connected    in Po999 full   40G    40GBASE-CR4       
-Po51       MLAG to sw-spine                connected    trunk    full   160G   N/A               
-Po999      MLAG PEER LINK - DONT TOUCH     connected    trunk    full   80G    N/A               
+Et47       MLAG to sw-mgmt-02 Ethernet47        connected    in Po47  full   1G     10GBASE-T         
+Et51/1     MLAG to sw-spine-01 Et5/1            connected    in Po51  full   40G    40GBASE-SRBD      
+Et52/1     MLAG to sw-spine-02 Et5/1            connected    in Po51  full   40G    40GBASE-SRBD      
+Et53/1     LAG to sw-leaf-tx-04 Et53/1          connected    in Po999 full   40G    40GBASE-CR4       
+Et54/1     LAG to sw-leaf-tx-04 Et54/1          connected    in Po999 full   40G    40GBASE-CR4       
+Po47       MLAG to sw-mgmt-02                   connected    trunk    full   2G     N/A               
+Po51       MLAG to sw-spine                     connected    trunk    full   160G   N/A               
+Po999      MLAG PEER LINK - DONT TOUCH          connected    trunk    full   80G    N/A               
 
-sw-leaf-tx-02#
-sw-leaf-tx-02#
+sw-leaf-tx-03#
+sw-leaf-tx-03#
 show int po1
 Port-Channel1 is down, line protocol is lowerlayerdown (notconnect)
-  Hardware is Port-Channel, address is 7483.ef27.b0c9
+  Hardware is Port-Channel, address is 7483.ef27.b07f
   Ethernet MTU 9214 bytes
   Full-duplex, Unconfigured 
   Active members in this channel: 0
   Fallback mode is: off
-  Down 6 days, 4 hours, 4 minutes, 35 seconds
+  Down 7 days, 2 hours, 31 minutes, 50 seconds
   1 link status changes since last clear
   Last clearing of "show interface" counters never
   5 minutes input rate 0 bps (- with framing overhead), 0 packets/sec
@@ -47,32 +49,34 @@ Port-Channel1 is down, line protocol is lowerlayerdown (notconnect)
      0 packets output, 0 bytes
      Sent 0 broadcasts, 0 multicast
      0 output errors, 0 output discards
-sw-leaf-tx-02#
-sw-leaf-tx-02#
+sw-leaf-tx-03#
+sw-leaf-tx-03#
 show int po47
-Port-Channel47 is down, line protocol is lowerlayerdown (notconnect)
-  Hardware is Port-Channel, address is 7483.ef27.b0c8
-  Description: MLAG to sw-mgmt-01
-  Ethernet MTU 0 bytes
-  Full-duplex, Unconfigured 
-  Active members in this channel: 0
+Port-Channel47 is up, line protocol is up (connected)
+  Hardware is Port-Channel, address is 7483.ef27.b07e
+  Description: MLAG to sw-mgmt-02
+  Ethernet MTU 9214 bytes , BW 2000000 kbit
+  Full-duplex, 2Gb/s 
+  Active members in this channel: 2
+  ... Ethernet47 , Full-duplex, 1Gb/s
+  ... PeerEthernet47 , Full-duplex, 1Gb/s
   Fallback mode is: off
-  Down 6 days, 3 hours, 17 minutes, 8 seconds
-  1 link status changes since last clear
+  Up 7 days, 2 hours, 30 minutes, 28 seconds
+  2 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 0 bps (- with framing overhead), 0 packets/sec
-  5 minutes output rate 0 bps (- with framing overhead), 0 packets/sec
-     0 packets input, 0 bytes
-     Received 0 broadcasts, 0 multicast
+  5 minutes input rate 899 bps (0.0% with framing overhead), 1 packets/sec
+  5 minutes output rate 8.13 kbps (0.0% with framing overhead), 14 packets/sec
+     41435 packets input, 7341565 bytes
+     Received 0 broadcasts, 40994 multicast
      0 input errors, 0 input discards
-     0 packets output, 0 bytes
-     Sent 0 broadcasts, 0 multicast
+     8131246 packets output, 585994040 bytes
+     Sent 15544 broadcasts, 8115529 multicast
      0 output errors, 0 output discards
-sw-leaf-tx-02#
-sw-leaf-tx-02#
+sw-leaf-tx-03#
+sw-leaf-tx-03#
 show int po51
 Port-Channel51 is up, line protocol is up (connected)
-  Hardware is Port-Channel, address is 7483.ef27.b0cc
+  Hardware is Port-Channel, address is 7483.ef27.b082
   Description: MLAG to sw-spine
   Ethernet MTU 9214 bytes , BW 160000000 kbit
   Full-duplex, 160Gb/s 
@@ -82,22 +86,22 @@ Port-Channel51 is up, line protocol is up (connected)
   ... PeerEthernet51/1 , Full-duplex, 40Gb/s
   ... PeerEthernet52/1 , Full-duplex, 40Gb/s
   Fallback mode is: off
-  Up 2 days, 36 minutes, 35 seconds
-  34 link status changes since last clear
+  Up 1 day, 1 hour, 8 seconds
+  2 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 689 bps (0.0% with framing overhead), 1 packets/sec
-  5 minutes output rate 514 bps (0.0% with framing overhead), 0 packets/sec
-     224188 packets input, 18544916 bytes
-     Received 147547 broadcasts, 76340 multicast
+  5 minutes input rate 8.37 kbps (0.0% with framing overhead), 14 packets/sec
+  5 minutes output rate 1.30 kbps (0.0% with framing overhead), 1 packets/sec
+     1241609 packets input, 90018631 bytes
+     Received 13772 broadcasts, 1227620 multicast
      0 input errors, 0 input discards
-     36766 packets output, 6188443 bytes
-     Sent 1464 broadcasts, 35003 multicast
+     13221 packets output, 2259759 bytes
+     Sent 257 broadcasts, 12006 multicast
      0 output errors, 0 output discards
-sw-leaf-tx-02#
-sw-leaf-tx-02#
+sw-leaf-tx-03#
+sw-leaf-tx-03#
 show int po999
 Port-Channel999 is up, line protocol is up (connected)
-  Hardware is Port-Channel, address is 7483.ef27.b0d5
+  Hardware is Port-Channel, address is 7483.ef27.b08b
   Description: MLAG PEER LINK - DONT TOUCH
   Ethernet MTU 9214 bytes , BW 80000000 kbit
   Full-duplex, 80Gb/s 
@@ -105,24 +109,24 @@ Port-Channel999 is up, line protocol is up (connected)
   ... Ethernet53/1 , Full-duplex, 40Gb/s
   ... Ethernet54/1 , Full-duplex, 40Gb/s
   Fallback mode is: off
-  Up 6 days, 3 hours, 17 minutes, 12 seconds
+  Up 7 days, 2 hours, 30 minutes, 39 seconds
   2 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 1.77 kbps (0.0% with framing overhead), 2 packets/sec
-  5 minutes output rate 2.01 kbps (0.0% with framing overhead), 3 packets/sec
-     1223437 packets input, 107137181 bytes
-     Received 75410 broadcasts, 71302 multicast
+  5 minutes input rate 2.12 kbps (0.0% with framing overhead), 3 packets/sec
+  5 minutes output rate 1.83 kbps (0.0% with framing overhead), 3 packets/sec
+     3096532 packets input, 387193020 bytes
+     Received 257422 broadcasts, 82671 multicast
      0 input errors, 0 input discards
-     1297097 packets output, 118291973 bytes
-     Sent 149067 broadcasts, 71296 multicast
+     2854479 packets output, 231155126 bytes
+     Sent 15546 broadcasts, 82723 multicast
      0 output errors, 0 output discards
-sw-leaf-tx-02#
-sw-leaf-tx-02#
+sw-leaf-tx-03#
+sw-leaf-tx-03#
 show mlag
 MLAG Configuration:   
-domain-id              :    sw-leaf-tx-pair1
+domain-id              :    sw-leaf-tx-pair2
 local-interface        :            Vlan4093
-peer-address           :        10.255.255.9
+peer-address           :       10.255.255.14
 peer-link              :     Port-Channel999
 peer-config            :          consistent
                                             
@@ -131,15 +135,15 @@ state                  :              Active
 negotiation status     :           Connected
 peer-link status       :                  Up
 local-int status       :                  Up
-system-id              :   76:83:ef:27:af:27
+system-id              :   76:83:ef:27:b0:4f
 dual-primary detection :            Disabled
                                             
 MLAG Ports:           
 Disabled               :                   0
 Configured             :                   0
-Inactive               :                   1
+Inactive               :                   0
 Active-partial         :                   0
-Active-full            :                   1
+Active-full            :                   2
 
-sw-leaf-tx-02#
-sw-leaf-tx-02#
+sw-leaf-tx-03#
+sw-leaf-tx-03#

@@ -1,4 +1,4 @@
-Last login: Wed Sep 19 14:46:16 2018 from 10.0.30.2
+Last login: Wed Sep 19 14:53:54 2018 from 10.0.30.2
 #*************************************************************#
 | Region:  North America       | Country: United States       |
 |-------------------------------------------------------------|
@@ -20,10 +20,12 @@ sw-leaf-tx-01>en
 sw-leaf-tx-01#
 sw-leaf-tx-01#
 show int status | section connected
+Et47       MLAG to sw-mgmt-01 Ethernet47 connected    in Po47  full   1G     10GBASE-T         
 Et51/1     MLAG to sw-spine-01 Et3/1     connected    in Po51  full   40G    40GBASE-SRBD      
 Et52/1     MLAG to sw-spine-02 Et3/1     connected    in Po51  full   40G    40GBASE-SRBD      
 Et53/1     LAG to sw-leaf-tx-02 Et53/1   connected    in Po999 full   40G    40GBASE-CR4       
 Et54/1     LAG to sw-leaf-tx-02 Et54/1   connected    in Po999 full   40G    40GBASE-CR4       
+Po47       MLAG to sw-mgmt-01            connected    trunk    full   2G     N/A               
 Po51       MLAG to sw-spine              connected    trunk    full   160G   N/A               
 Po999      MLAG PEER LINK - DONT TOUCH   connected    trunk    full   80G    N/A               
 
@@ -36,7 +38,7 @@ Port-Channel1 is down, line protocol is lowerlayerdown (notconnect)
   Full-duplex, Unconfigured 
   Active members in this channel: 0
   Fallback mode is: off
-  Down 6 days, 4 hours, 4 minutes, 49 seconds
+  Down 7 days, 3 hours, 2 minutes, 52 seconds
   1 link status changes since last clear
   Last clearing of "show interface" counters never
   5 minutes input rate 0 bps (- with framing overhead), 0 packets/sec
@@ -50,23 +52,25 @@ Port-Channel1 is down, line protocol is lowerlayerdown (notconnect)
 sw-leaf-tx-01#
 sw-leaf-tx-01#
 show int po47
-Port-Channel47 is down, line protocol is lowerlayerdown (notconnect)
+Port-Channel47 is up, line protocol is up (connected)
   Hardware is Port-Channel, address is 7483.ef27.af56
   Description: MLAG to sw-mgmt-01
-  Ethernet MTU 0 bytes
-  Full-duplex, Unconfigured 
-  Active members in this channel: 0
+  Ethernet MTU 9214 bytes , BW 2000000 kbit
+  Full-duplex, 2Gb/s 
+  Active members in this channel: 2
+  ... Ethernet47 , Full-duplex, 1Gb/s
+  ... PeerEthernet47 , Full-duplex, 1Gb/s
   Fallback mode is: off
-  Down 6 days, 3 hours, 17 minutes, 15 seconds
-  1 link status changes since last clear
+  Up 19 minutes, 17 seconds
+  2 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 0 bps (- with framing overhead), 0 packets/sec
-  5 minutes output rate 0 bps (- with framing overhead), 0 packets/sec
-     0 packets input, 0 bytes
-     Received 0 broadcasts, 0 multicast
+  5 minutes input rate 846 bps (0.0% with framing overhead), 1 packets/sec
+  5 minutes output rate 8.13 kbps (0.0% with framing overhead), 14 packets/sec
+     1030 packets input, 92574 bytes
+     Received 159 broadcasts, 733 multicast
      0 input errors, 0 input discards
-     0 packets output, 0 bytes
-     Sent 0 broadcasts, 0 multicast
+     16181 packets output, 1173204 bytes
+     Sent 234 broadcasts, 15849 multicast
      0 output errors, 0 output discards
 sw-leaf-tx-01#
 sw-leaf-tx-01#
@@ -82,16 +86,16 @@ Port-Channel51 is up, line protocol is up (connected)
   ... PeerEthernet51/1 , Full-duplex, 40Gb/s
   ... PeerEthernet52/1 , Full-duplex, 40Gb/s
   Fallback mode is: off
-  Up 2 days, 36 minutes, 44 seconds
+  Up 2 days, 23 hours, 34 minutes, 48 seconds
   34 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 8.12 kbps (0.0% with framing overhead), 14 packets/sec
-  5 minutes output rate 601 bps (0.0% with framing overhead), 0 packets/sec
-     6988973 packets input, 503105421 bytes
-     Received 73900 broadcasts, 6914978 multicast
+  5 minutes input rate 8.38 kbps (0.0% with framing overhead), 14 packets/sec
+  5 minutes output rate 1.02 kbps (0.0% with framing overhead), 1 packets/sec
+     8128741 packets input, 585715429 bytes
+     Received 86312 broadcasts, 8042232 multicast
      0 input errors, 0 input discards
-     36813 packets output, 6173868 bytes
-     Sent 1449 broadcasts, 35045 multicast
+     48623 packets output, 8170076 bytes
+     Sent 1847 broadcasts, 46115 multicast
      0 output errors, 0 output discards
 sw-leaf-tx-01#
 sw-leaf-tx-01#
@@ -105,16 +109,16 @@ Port-Channel999 is up, line protocol is up (connected)
   ... Ethernet53/1 , Full-duplex, 40Gb/s
   ... Ethernet54/1 , Full-duplex, 40Gb/s
   Fallback mode is: off
-  Up 6 days, 3 hours, 17 minutes, 19 seconds
+  Up 7 days, 2 hours, 15 minutes, 22 seconds
   2 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 2.21 kbps (0.0% with framing overhead), 3 packets/sec
-  5 minutes output rate 1.77 kbps (0.0% with framing overhead), 2 packets/sec
-     1297189 packets input, 118301248 bytes
-     Received 149067 broadcasts, 71296 multicast
+  5 minutes input rate 2.24 kbps (0.0% with framing overhead), 3 packets/sec
+  5 minutes output rate 1.92 kbps (0.0% with framing overhead), 3 packets/sec
+     1509782 packets input, 137246404 bytes
+     Received 183403 broadcasts, 82548 multicast
      0 input errors, 0 input discards
-     1223460 packets output, 107139032 bytes
-     Sent 75415 broadcasts, 71302 multicast
+     1414483 packets output, 123795290 bytes
+     Sent 88225 broadcasts, 82600 multicast
      0 output errors, 0 output discards
 sw-leaf-tx-01#
 sw-leaf-tx-01#
@@ -137,9 +141,9 @@ dual-primary detection :            Disabled
 MLAG Ports:           
 Disabled               :                   0
 Configured             :                   0
-Inactive               :                   1
+Inactive               :                   0
 Active-partial         :                   0
-Active-full            :                   1
+Active-full            :                   2
 
 sw-leaf-tx-01#
 sw-leaf-tx-01#

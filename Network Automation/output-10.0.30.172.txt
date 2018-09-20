@@ -1,0 +1,47 @@
+Last login: Thu Sep 20 22:43:07 2018 from 10.0.30.2
+en
+
+en
+
+sw-spine-02>en
+sw-spine-02#
+sw-spine-02#
+show mlag
+[?1h=MLAG Configuration:   
+domain-id              :        ATP-SPINE-SW
+local-interface        :            Vlan4093
+peer-address           :        10.255.255.1
+peer-link              :     Port-Channel999
+peer-config            :          consistent
+                                            
+MLAG Status:          
+state                  :              Active
+negotiation status     :           Connected
+peer-link status       :                  Up
+local-int status       :                  Up
+system-id              :   76:83:ef:58:ad:df
+dual-primary detection :            Disabled
+                                            
+MLAG Ports:           
+Disabled               :                   0
+Configured             :                   0
+Inactive               :                   0
+Active-partial         :                   0
+Active-full            :                   6
+
+[K[?1l>sw-spine-02#
+sw-spine-02#
+show int status
+[?1h=Port       Name                         Status       Vlan     Duplex Speed  Type          Flags
+Et1/1      MLAG to sw-leaf-sx-01 Et52/1 connected    in Po1   full   40G    40GB ASE-SRBD      
+Et2/1      MLAG to sw-leaf-sx-02 Et52/1 connected    in Po1   full   40G    40GB ASE-SRBD      
+Et3/1      MLAG to sw-leaf-tx-01 Et52/1 connected    in Po2   full   40G    40GB ASE-SRBD      
+Et4/1      MLAG to sw-leaf-tx-02 Et52/1 connected    in Po2   full   40G    40GB ASE-SRBD      
+Et5/1      MLAG to sw-leaf-tx-03 Et52/1 connected    in Po3   full   40G    40GB ASE-SRBD      
+Et6/1      MLAG to sw-leaf-tx-04 Et52/1 connected    in Po3   full   40G    40GB ASE-SRBD      
+Et7/1      MLAG to sw-leaf-tx-05 Et52/1 connected    in Po4   full   40G    40GB ASE-SRBD      
+Et8/1      MLAG to sw-leaf-tx-06 Et52/1 connected    in Po4   full   40G    40GB ASE-SRBD      
+Et9/1      MLAG to sw-leaf-tx-07 Et52/1 connected    in Po5   full   40G    40GB ASE-SRBD      
+Et10/1     MLAG to sw-leaf-tx-08 Et52/1 connected    in Po5   full   40G    40GB ASE-SRBD      
+Et11/1     MLAG to sw-leaf-tx-09 Et52/1 connected    in Po6   full   40G    40GB [7m --More-- [m[K[KASE-SRBD      
+[7m --More-- [m[K

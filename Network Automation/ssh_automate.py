@@ -74,7 +74,9 @@ def print_cmd_completion_status(curr_cmd, output):
 
 
 config_mode = {
+		# Works for arista EOS!
         'cisco': 'en\nconf t\nterm len 0',
+		'arista': 'en\nconf t\nterm len 0',
         'juniper': 'cli\nconfigure\nset cli screen-length 0'
 
     }
@@ -143,15 +145,22 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 
 			# Now we can execute commands
 			ssh_remote.send(line.lstrip())
-			if 'show run' in line:
+			if 'show ' in line:
 				time.sleep(5)
 			else:
-				time.sleep(1)
+				time.sleep(5)
 
-			output = ssh_remote.recv(655350)
+			while True:
+				print 'here'
+				output = ssh_remote.recv(1024)
+				result.write(output)
+				if len(output) < 1024:
+					print 'break 2'
+					break
+
 			print_cmd_completion_status(curr_cmd, output)
 
-			result.write(output + '\n')
+			result.write('\n')
 	result.close()
 	return new_file
 
@@ -197,7 +206,7 @@ for z in range(0, len(output_files_list), 1):
 
 	print 'Device ' + title + ' Errors'
 
-	process = pexpect.spawn('cat ' + output_files_list[i] + ' grep -B 2 Invalid')
+	process = pexpect.spawn('cat ' + output_files_list[i] + ' | grep -B 2 Invalid')
 
 	print process.before
 	process.interact()

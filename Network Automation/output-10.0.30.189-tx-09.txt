@@ -1,4 +1,4 @@
-Last login: Wed Sep 19 14:45:01 2018 from 10.0.30.2
+Last login: Wed Sep 19 14:52:31 2018 from 10.0.30.2
 #*************************************************************#
 | Region:  North America       | Country: United States       |
 |-------------------------------------------------------------|
@@ -25,7 +25,7 @@ Et51/1     MLAG to sw-spine-01 Et11/1    connected    in Po51  full   40G    40G
 Et52/1     MLAG to sw-spine-02 Et11/1    connected    in Po51  full   40G    40GBASE-SRBD      
 Et53/1     LAG to sw-leaf-tx-10 Et53/1   connected    in Po999 full   40G    40GBASE-CR4       
 Et54/1     LAG to sw-leaf-tx-10 Et54/1   connected    in Po999 full   40G    40GBASE-CR4       
-Po47       MLAG to sw-mgmt-05            connected    trunk    full   1G     N/A               
+Po47       MLAG to sw-mgmt-05            connected    trunk    full   2G     N/A               
 Po51       MLAG to sw-spine              connected    trunk    full   160G   N/A               
 Po999      MLAG PEER LINK - DONT TOUCH   connected    trunk    full   80G    N/A               
 
@@ -39,21 +39,22 @@ show int po47
 Port-Channel47 is up, line protocol is up (connected)
   Hardware is Port-Channel, address is 7483.ef27.a582
   Description: MLAG to sw-mgmt-05
-  Ethernet MTU 9214 bytes , BW 1000000 kbit
-  Full-duplex, 1Gb/s 
-  Active members in this channel: 1
+  Ethernet MTU 9214 bytes , BW 2000000 kbit
+  Full-duplex, 2Gb/s 
+  Active members in this channel: 2
   ... Ethernet47 , Full-duplex, 1Gb/s
+  ... PeerEthernet47 , Full-duplex, 1Gb/s
   Fallback mode is: off
-  Up 6 days, 4 hours, 27 minutes, 6 seconds
-  2 link status changes since last clear
+  Up 21 hours, 47 minutes, 2 seconds
+  5 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 1.04 kbps (0.0% with framing overhead), 1 packets/sec
-  5 minutes output rate 8.46 kbps (0.0% with framing overhead), 14 packets/sec
-     608127 packets input, 46866188 bytes
-     Received 73521 broadcasts, 534264 multicast
+  5 minutes input rate 1.07 kbps (0.0% with framing overhead), 1 packets/sec
+  5 minutes output rate 8.07 kbps (0.0% with framing overhead), 14 packets/sec
+     666688 packets input, 51595707 bytes
+     Received 84899 broadcasts, 581184 multicast
      0 input errors, 0 input discards
-     7175232 packets output, 516036490 bytes
-     Sent 154036 broadcasts, 7020957 multicast
+     8310661 packets output, 597772981 bytes
+     Sent 167426 broadcasts, 8142986 multicast
      0 output errors, 0 output discards
 sw-leaf-tx-09#
 sw-leaf-tx-09#
@@ -69,16 +70,16 @@ Port-Channel51 is up, line protocol is up (connected)
   ... PeerEthernet51/1 , Full-duplex, 40Gb/s
   ... PeerEthernet52/1 , Full-duplex, 40Gb/s
   Fallback mode is: off
-  Up 2 days, 41 minutes, 51 seconds
+  Up 2 days, 23 hours, 39 minutes, 55 seconds
   12 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 424 bps (0.0% with framing overhead), 1 packets/sec
-  5 minutes output rate 1.31 kbps (0.0% with framing overhead), 1 packets/sec
-     122377 packets input, 12963852 bytes
-     Received 73345 broadcasts, 48873 multicast
+  5 minutes input rate 610 bps (0.0% with framing overhead), 1 packets/sec
+  5 minutes output rate 1.22 kbps (0.0% with framing overhead), 1 packets/sec
+     146120 packets input, 15720491 bytes
+     Received 85763 broadcasts, 60121 multicast
      0 input errors, 0 input discards
-     118911 packets output, 12733298 bytes
-     Sent 72118 broadcasts, 46138 multicast
+     142042 packets output, 15468501 bytes
+     Sent 83735 broadcasts, 57208 multicast
      0 output errors, 0 output discards
 sw-leaf-tx-09#
 sw-leaf-tx-09#
@@ -92,16 +93,16 @@ Port-Channel999 is up, line protocol is up (connected)
   ... Ethernet53/1 , Full-duplex, 40Gb/s
   ... Ethernet54/1 , Full-duplex, 40Gb/s
   Fallback mode is: off
-  Up 6 days, 4 hours, 35 minutes, 56 seconds
+  Up 7 days, 3 hours, 34 minutes
   5 link status changes since last clear
   Last clearing of "show interface" counters never
-  5 minutes input rate 6.23 kbps (0.0% with framing overhead), 6 packets/sec
-  5 minutes output rate 3.76 kbps (0.0% with framing overhead), 6 packets/sec
-     2750312 packets input, 359310529 bytes
-     Received 79175 broadcasts, 71910 multicast
+  5 minutes input rate 6.59 kbps (0.0% with framing overhead), 7 packets/sec
+  5 minutes output rate 4.40 kbps (0.0% with framing overhead), 7 packets/sec
+     3261448 packets input, 421938358 bytes
+     Received 102242 broadcasts, 83140 multicast
      0 input errors, 0 input discards
-     2819270 packets output, 225984458 bytes
-     Sent 148393 broadcasts, 71922 multicast
+     3331370 packets output, 266398823 bytes
+     Sent 172428 broadcasts, 83176 multicast
      0 output errors, 0 output discards
 sw-leaf-tx-09#
 sw-leaf-tx-09#
@@ -111,7 +112,7 @@ domain-id              :    sw-leaf-tx-pair5
 local-interface        :            Vlan4093
 peer-address           :       10.255.255.26
 peer-link              :     Port-Channel999
-peer-config            :        inconsistent
+peer-config            :          consistent
                                             
 MLAG Status:          
 state                  :              Active
@@ -123,10 +124,10 @@ dual-primary detection :            Disabled
                                             
 MLAG Ports:           
 Disabled               :                   0
-Configured             :                   1
+Configured             :                   0
 Inactive               :                   0
 Active-partial         :                   0
-Active-full            :                   1
+Active-full            :                   2
 
 sw-leaf-tx-09#
 sw-leaf-tx-09#
