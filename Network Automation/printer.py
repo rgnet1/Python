@@ -1,5 +1,5 @@
 def print_progress(line):
-	title = 'About to execute command: ' + cmd
+	title = 'About to execute command: ' + line.strip()
 	top_bar = '           '
 
 	for z in range(0, len(title), 1):

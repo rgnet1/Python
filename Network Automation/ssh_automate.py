@@ -1,7 +1,7 @@
 import paramiko
 import time
 import argparse
-from printer import *
+# from printer import *
 
 # used for running os commands
 import pexpect
@@ -30,8 +30,51 @@ kevin_flag = False
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
+
+def print_progress(line):
+	title = 'About to execute command: ' + line.strip()
+	top_bar = '           '
+
+	for z in range(0, len(title), 1):
+		top_bar += '_'
+	print top_bar
+
+	curr_cmd = '__________|About to execute command: ' + line.strip() + '|__________'
+	print curr_cmd
+
+	empty_line = '|'
+	for y in range(0, len(curr_cmd) - 1, 1):
+		empty_line += ' '
+	empty_line += '|'
+	print empty_line
+
+	return curr_cmd
+
+
+def print_cmd_completion_status(curr_cmd, output):
+	success_string = '| command status: successful'
+	invalid_string = '| command status: invalid/incomplete'
+	if 'Invalid input' in output or 'Incomplete command' in output:
+		for u in range(0, len(curr_cmd) - len(invalid_string), 1):
+			invalid_string += ' '
+		invalid_string += '|'
+		print invalid_string
+	else:
+		for u in range(0, len(curr_cmd) - len(success_string), 1):
+			success_string += ' '
+		success_string += '|'
+		print success_string
+
+	end_line = '|'
+	for x in range(0, len(curr_cmd) - 1, 1):
+		end_line += '_'
+	end_line += '|\n\n\n'
+	print end_line
+
+
+
 config_mode = {
-        'cisco': 'en\nconf t\ntermlen 0',
+        'cisco': 'en\nconf t\nterm len 0',
         'juniper': 'cli\nconfigure\nset cli screen-length 0'
 
     }
@@ -83,13 +126,13 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 	command_list = open(ip_commands, 'r')
 	config_cmds = conf.split('\n')
 
-	# Executing config commands
-	for f in range(0,len(config_cmds) 1):
-		curr_cmd = print_progress(config_cmds[f])
-		ssh_remote.send(config_cmds[f])
-		time.sleep(1)
-		output = ssh_remote.recv(655350)
-		print_cmd_completion_status(curr_cmd, output)
+	# # Executing config commands
+	# for f in range(0,len(config_cmds), 1):
+	# 	curr_cmd = print_progress(config_cmds[f])
+	# 	ssh_remote.send(config_cmds[f])
+	# 	time.sleep(3)
+	# 	output = ssh_remote.recv(655350)
+	# 	print_cmd_completion_status(curr_cmd, output)
 
 	# executing user commands
 	for line in command_list:

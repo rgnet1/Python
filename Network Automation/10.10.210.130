@@ -1,7 +1,0 @@
-enable
-terminal len 0
-conf terminal
-write mem
-!
-show run
-!

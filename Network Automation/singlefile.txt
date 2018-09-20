@@ -1,0 +1,8 @@
+en
+show int status | section connected
+show int po1
+show int po47
+show int po51
+show int po999
+show mlag
+!
