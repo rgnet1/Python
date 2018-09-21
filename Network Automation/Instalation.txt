@@ -1,0 +1,7 @@
+use the following commands to be able to run my script:
+
+sudo apt install python
+sudo apt install python-pip
+pip install paramiko
+pip install argparse
+pip install pexpect
