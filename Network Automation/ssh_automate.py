@@ -1,6 +1,9 @@
 import paramiko
 import time
 import argparse
+# Remove bad chars
+import re
+
 # from printer import *
 
 # used for running os commands
@@ -156,7 +159,11 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 			while True:
 				if ssh_remote.recv_ready():
 					output = ssh_remote.recv(1024)
-					result.write(output)
+					new_output = ''
+					for x in output:
+						new_output += (re.compile(r'\x1b[^m]*m')).sub('', x)
+					print new_output
+					result.write(new_output)
 				else:
 					rcv_timeout -= interval_length
 				if rcv_timeout < 0:
@@ -186,7 +193,7 @@ output_files_list = []
 
 for i in range(numOfDevices):
 	print "********** Now Going into device: ", deviceList[i][0], " ************"
-	ssh.connect(deviceList[i][0], port=22, username=deviceList[i][1], password=deviceList[i][2])
+	ssh.connect(deviceList[i][0], port=22, username=deviceList[i][1], password=deviceList[i][2], look_for_keys=False)
 
 	ssh_remote = ssh.invoke_shell()
 
