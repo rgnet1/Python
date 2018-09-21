@@ -1,89 +1,0 @@
-Last login: Thu Sep 20 13:51:54 2018 from 10.0.30.2
-#*************************************************************#
-| Region:  North America       | Country: United States       |
-|-------------------------------------------------------------|
-| State/Province/Area:  California                            |
-|-------------------------------------------------------------|
-| Site:  Equinix DC                                           |
-|-------------------------------------------------------------|
-| Comments: sw-mgmt-02
-|*************************************************************|
-| Management IP: 10.0.30.195/24	| S/N: SSJ18231905
-|                                                             |
-#*************************************************************#
-
-en
-
-en
-
-sw-mgmt-02>en
-sw-mgmt-02#
-sw-mgmt-02#
-show int status | section connected
-
-[?1h=Et47       Port-Channel to sw-leaf-tx-03 Ethernet47        connected    in Po1    full   1G     1000BASE-T        
-Et48       Port-Channel to sw-leaf-tx-04 Ethernet47        connected    in Po1    full   1G     1000BASE-T        
-Po1        Port-Channel to sw-leaf-tx-03 and sw-leaf-tx-04 connected    trunk     full   2G     N/A               
-[K[?1l>sw-mgmt-02#
-sw-mgmt-02#show int po1
-[?1h=Port-Channel1 is up, line protocol is up (connected)
-  Hardware is Port-Channel, address is 7483.efd4.2484
-  Description: Port-Channel to sw-leaf-tx-03 and sw-leaf-tx-04
-  Ethernet MTU 9214 bytes , BW 2000000 kbit
-  Full-duplex, 2Gb/s 
-  Active members in this channel: 2
-  ... Ethernet47 , Full-duplex, 1Gb/s
-  ... Ethernet48 , Full-duplex, 1Gb/s
-  Fallback mode is: off
-  Up 7 days, 2 hours, 30 minutes, 13 seconds
-  5 link status changes since last clear
-  Last clearing of "show interface" counters never
-  5 minutes input rate 8.84 kbps (0.0% with framing overhead), 15 packets/sec
-  5 minutes output rate 1.10 kbps (0.0% with framing overhead), 1 packets/sec
-     8356101 packets input, 605080685 bytes
-     Received 188266 broadcasts, 8167203 multicast
-     0 input errors, 0 input discards
-     688691 packets output, 57514458 bytes
-     Sent 84791 broadcasts, 603028 multicast
-     0 output errors, 0 output discards
-[K[?1l>sw-mgmt-02#
-sw-mgmt-02#
-show int po47
-[?1h=[K[?1l>% Interface does not exist
-sw-mgmt-02#
-sw-mgmt-02#
-show int po51
-
-show int po999
-
-[?1h=[K[?1l>% Interface does not exist
-sw-mgmt-02#
-sw-mgmt-02#show int po999
-[?1h=[K[?1l>% Interface does not exist
-sw-mgmt-02#
-sw-mgmt-02#
-show mlag
-[?1h=MLAG Configuration:   
-domain-id              :                    
-local-interface        :                    
-peer-address           :             0.0.0.0
-peer-link              :                    
-peer-config            :                    
-                                            
-MLAG Status:          
-state                  :            Disabled
-negotiation status     :                    
-peer-link status       :                    
-local-int status       :                    
-system-id              :   00:00:00:00:00:00
-dual-primary detection :            Disabled
-                                            
-MLAG Ports:           
-Disabled               :                   0
-Configured             :                   0
-Inactive               :                   0
-Active-partial         :                   0
-Active-full            :                   0
-
-[K[?1l>sw-mgmt-02#
-sw-mgmt-02#
