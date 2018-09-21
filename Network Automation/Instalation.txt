@@ -1,5 +1,7 @@
 use the following commands to be able to run my script:
 
+
+         On Ubuntu:
 sudo apt install python
 sudo apt install python-pip
 pip install paramiko
