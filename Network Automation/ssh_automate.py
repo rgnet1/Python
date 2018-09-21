@@ -148,7 +148,7 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 			if 'show ' in line:
 				time.sleep(5)
 			else:
-				time.sleep(5)
+				time.sleep(1)
 
 			# Continue to read from buffer until output is done.
 			rcv_timeout = 5
@@ -167,8 +167,6 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 			result.write('\n')
 	result.close()
 	return new_file
-
-		
 
 
 # Main()
@@ -210,7 +208,10 @@ for z in range(0, len(output_files_list), 1):
 
 	print 'Device ' + title + ' Errors'
 
-	process = pexpect.spawn('cat ' + output_files_list[i] + ' | grep -B 2 Invalid')
+	cmd = 'cat ' + output_files_list[i] + ' | grep -B 2 Invalid'
+	print cmd
+	process = pexpect.spawn('/bin/bash')
+	process.sendline(cmd)
 
 	print process.before
 	process.interact()

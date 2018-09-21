@@ -1,4 +1,2 @@
-en
-show mlag
-show int status
-!
+ls
+pwd
