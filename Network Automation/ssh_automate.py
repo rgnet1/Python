@@ -139,6 +139,7 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 	# 	output = ssh_remote.recv(655350)
 	# 	print_cmd_completion_status(curr_cmd, output)
 	hostname = ''
+	first_run = 1
 	# executing user commands
 	for line in command_list:
 
@@ -148,46 +149,64 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 
 			# Now we can execute commands
 			ssh_remote.send(line.lstrip())
-			if 'show ' in line:
+			if 'show' in line:
 				time.sleep(5)
 			else:
 				time.sleep(1)
 
 
 			# Continue to read from buffer until output is done.
-			rcv_timeout = 5
+			rcv_timeout = 6
 			interval_length = 1
+			hostname_found = False
+			new_output = ''
 			while True:
 				if ssh_remote.recv_ready():
 					output = ssh_remote.recv(1024)
-					new_output = ''
+
 					# Remove unwanted chars
 					for x in output:
 						new_output += (re.compile(r'\x1b[^m]*m')).sub('', x)
 
-					print new_output
-					if len(hostname) == 0 and ("> " in new_output or "# " in new_output):
-						if '(' in new_output:
-							rm_parenthesis = new_output.split('(')
-							hostname = rm_parenthesis[0]
-						elif '#' in new_output:
-							rm_prompt = new_output.split('#')
-							hostname = rm_prompt
-						elif '>' in new_output:
-							rm_prompt = new_output.split('>')
-							hostname = rm_prompt
-						print hostname
-						new_file += '-' + hostname + '.txt'
-						result = open(new_file, 'w')
-					# Write output to the output file
-					result.write(new_output)
+				# If recv buffer is empty (we got all the output)
 				else:
 					rcv_timeout -= interval_length
 				if rcv_timeout < 0:
+					if first_run:
+						print 'ABOUT TO GET PROMPT'
+						hostname = ssh_remote.recv(1024)
+						print hostname
+						if '# ' in hostname:
+							rm_prompt = hostname.split('#')
+							hostname = rm_prompt[0]
+							hostname_found = True
+						elif '> ' in hostname:
+							rm_prompt = hostname.split('>')
+							hostname = rm_prompt[0]
+							hostname_found = True
+						# Look for" hostname(currentmode)"
+						if '(' in hostname:
+							rm_parenthesis = hostname.split('(')
+							hostname = rm_parenthesis[0]
+						# Look for username@hostname
+						if '@' in hostname:
+							rm_user = hostname.split('@')
+							hostname = rm_user[1]
+
+						if hostname_found:
+							new_file += '-' + hostname + '.txt'
+							result = open(new_file, 'w')
+							first_run = False
+						if not hostname_found:
+							print 'DID NOT FIND HOSTNAME, exiting program'
+							exit()
+						first_run = False
 					break
 
-			print_cmd_completion_status(curr_cmd, output)
 
+			print_cmd_completion_status(curr_cmd, output)
+			# Write output to the output file
+			result.write(new_output)
 			result.write('\n')
 	result.close()
 	return new_file

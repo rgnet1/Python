@@ -1,0 +1,4 @@
+set cli pager off
+configure
+show
+!
