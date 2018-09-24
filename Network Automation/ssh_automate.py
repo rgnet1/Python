@@ -126,8 +126,8 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 		start = begin_found
 		print 'exiting now, remove this statement in the future'
 		exit()
-	new_file = 'output-' + device_name + '.txt'
-	result = open(new_file, 'w')
+	new_file = 'output-' + device_name # + '.txt'
+	# result = open(new_file, 'w')
 	command_list = open(ip_commands, 'r')
 	config_cmds = conf.split('\n')
 
@@ -138,7 +138,7 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 	# 	time.sleep(3)
 	# 	output = ssh_remote.recv(655350)
 	# 	print_cmd_completion_status(curr_cmd, output)
-
+	hostname = ''
 	# executing user commands
 	for line in command_list:
 
@@ -153,6 +153,7 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 			else:
 				time.sleep(1)
 
+
 			# Continue to read from buffer until output is done.
 			rcv_timeout = 5
 			interval_length = 1
@@ -165,7 +166,19 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 						new_output += (re.compile(r'\x1b[^m]*m')).sub('', x)
 
 					print new_output
-
+					if len(hostname) == 0 and ("> " in new_output or "# " in new_output):
+						if '(' in new_output:
+							rm_parenthesis = new_output.split('(')
+							hostname = rm_parenthesis[0]
+						elif '#' in new_output:
+							rm_prompt = new_output.split('#')
+							hostname = rm_prompt
+						elif '>' in new_output:
+							rm_prompt = new_output.split('>')
+							hostname = rm_prompt
+						print hostname
+						new_file += '-' + hostname + '.txt'
+						result = open(new_file, 'w')
 					# Write output to the output file
 					result.write(new_output)
 				else:

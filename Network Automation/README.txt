@@ -1,4 +1,4 @@
-INSTRUCTINO TO USE ssh_automate.py
+INSTRUCTIONS TO USE ssh_automate.py
 
 
 First you must make a file called "login credentials.txt". In this file you will
@@ -7,10 +7,7 @@ First you must make a file called "login credentials.txt". In this file you will
  by including a "#" as the first character in the line.
  
   EX: "10.10.210.125 myusername mypassword"
- 
- As of now, DO NOT leave blank lines in the file. Those will be supported in a future 
- update.
- 
+
 Next, We need to configure the commands you want to run on the device(s). To do this,
 we have multiple options:
 
@@ -29,7 +26,7 @@ Once this is done, simply run the program: "python ssh_automate.py"
 The output of the terminal will be saved into a file with the ip addres an "-output" appended to this new file.
 
 
-2. Using 1 config on multiple devices (opposite of option 1)
+2. Using 1 config on multiple devices (oposite of option 1)
 
 If you use the single file flag: "-sf <File Name>" you can spcify the single file that contains all the lines you want
 to run on every device listed in your "log in credentials.txt" file.
