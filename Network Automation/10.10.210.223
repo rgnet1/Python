@@ -1,4 +1,11 @@
-set cli pager off
-configure
-show
+!
+interface Ethernet47
+description MLAG to sw-mgmt-01 Ethernet47
+speed forced 1000full
+channel-group 47 mode active
+!
+interface Port-Channel47
+description MLAG to sw-mgmt-01
+switchport mode trunk
+mlag 47
 !

@@ -10,13 +10,13 @@ import re
 import pexpect
 
 #              ssh_automate.py
-# This is a simple program that ssh's into Networkig devices and
+# This is a simple program that ssh's into Networking devices and
 # gets the interface configuration. This program requires all devices'
 # ssh information reside in the file "config.txt", which should be in the
 # same directory as this script.
 #
 # This program assumes devices are already set up for ssh (instructions
-# can be found in the file "sshSetupCisco.txt"
+# can be found in the file "sshSetupCisco.txt" for Cisco devices)
 
 
 parser = argparse.ArgumentParser()
@@ -110,6 +110,9 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 		print 'Kevin flag is on'
 		global begin_found
 		global start
+		# start = 0
+
+		# print begin_found
 		command_list = open(ip_commands, 'w')
 		kevin_file = open(k_file_name, 'r')
 
@@ -117,15 +120,15 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 			while begin_found <= start:
 				if line.startswith('######') and 'BEGIN CONFIG' in line:
 					begin_found += 1
-				else:
+				elif begin_found == start:
 					command_list.write(line.strip() + '\n')
 					print 'Writing the following cmd: ['+ line.strip()+']'
 
 				line = kevin_file.next()
 		command_list.close()
-		start = begin_found
-		print 'exiting now, remove this statement in the future'
-		exit()
+		start += 1
+		begin_found = -1
+	print 'AFTER: ', 	begin_found, start
 	new_file = 'output-' + device_name # + '.txt'
 	# result = open(new_file, 'w')
 	command_list = open(ip_commands, 'r')
@@ -172,6 +175,7 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 				else:
 					rcv_timeout -= interval_length
 				if rcv_timeout < 0:
+					print 'FIRST RUN IS: ', first_run
 					if first_run:
 						print 'ABOUT TO GET PROMPT'
 						hostname = ssh_remote.recv(1024)
@@ -203,7 +207,6 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 						first_run = False
 					break
 
-
 			print_cmd_completion_status(curr_cmd, output)
 			# Write output to the output file
 			result.write(new_output)
@@ -216,12 +219,11 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 
 #Read in file for address, username and password
 numOfDevices, deviceList = readFile("log in credentials.txt")
-
+global begin_found
+global start
+start = 0 # 0
+begin_found = -1 # -1
 if kevin_file:
-	global begin_found
-	global start
-	start = 0
-	begin_found = 0
 	kevin_flag = True
 	print 'KEVIN FILE'
 output_files_list = []
@@ -229,6 +231,7 @@ output_files_list = []
 
 for i in range(numOfDevices):
 	print "********** Now Going into device: ", deviceList[i][0], " ************"
+	print begin_found, start
 	ssh.connect(deviceList[i][0], port=22, username=deviceList[i][1], password=deviceList[i][2], look_for_keys=False)
 
 	ssh_remote = ssh.invoke_shell()
@@ -250,7 +253,8 @@ for z in range(0, len(output_files_list), 1):
 	title = title.strip('.txt')
 
 	print 'Device ' + title + ' Errors'
-
+	# Palo alto key word is "Unknown command:"
+	# Arista and Cisco key word is: "Invalid"
 	cmd = 'cat ' + output_files_list[i] + ' | grep -B 2 Invalid'
 	print cmd
 	process = pexpect.spawn('/bin/bash')
