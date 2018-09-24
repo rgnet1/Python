@@ -52,6 +52,6 @@ login credentials.txt                                            configfile.txt
 10.10.210.125 myusername mypassword                              ############# BEGIN CONFIGURATION FOR 10.10.210.125 ###########
 10.20.210.124 myuser newPass                                     int fe1/0
                                                                  ip adr 10.10.210.128 255.255.255.0
-																 ############# BEGIN CONFIGURATION FOR 10.20.210.124 ###########
-																 vlan10
-																 description myVlan10
+                                                                 ############# BEGIN CONFIGURATION FOR 10.20.210.124 ###########
+                                                                 vlan10
+                                                                 description myVlan10

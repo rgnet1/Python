@@ -92,14 +92,14 @@ def readFile(fileName):
 	numOfDevices = 0
 	readfile = open("log in credentials.txt", "r")
 	for line in readfile:
-		# Skip commented out
-		if not line.startswith('#') and not line.startswith('//'):
+		# Skip commented out and blank lines (\n) which have a len of 2
+		if not line.startswith('#') and not line.startswith('//') and len(line) > 2:
 			line = line.strip("\r\n")
 			line = line.split(" ")
 			deviceList.append([line[0], line[1], line[2]])
 			numOfDevices += 1
-
 	return numOfDevices, deviceList
+
 
 
 
@@ -160,9 +160,13 @@ def execute_commands(ip_commands, ssh_remote, device_name, kevin_flag, k_file_na
 				if ssh_remote.recv_ready():
 					output = ssh_remote.recv(1024)
 					new_output = ''
+					# Remove unwanted chars
 					for x in output:
 						new_output += (re.compile(r'\x1b[^m]*m')).sub('', x)
+
 					print new_output
+
+					# Write output to the output file
 					result.write(new_output)
 				else:
 					rcv_timeout -= interval_length
