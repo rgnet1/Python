@@ -14,3 +14,6 @@ def isPalindrom(string):
 
 print(isPalindrom("racecar"))
 print(isPalindrom("cc."))
+
+
+def Paindrom()
